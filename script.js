@@ -90,7 +90,7 @@ btnScrollTo.addEventListener(".click", function (e) {
 //   });
 // });
 
-document.querySelector(".nav__links").addEventListener("click", function (e) {
+document.querySelector(".nav__links").addEventListener("s click", function (e) {
   e.preventDefault();
 
   //Just the clicks on the buttons will work
@@ -101,4 +101,29 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
 
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
   }
+});
+
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+tabsContainer.addEventListener("click", function (n) {
+  const clicked = n.target.closest(".operations__tab"); //select the class even if the user clicks at the number
+
+  //Guard clause that it's used to avoid doing sth if the user clicks at a non-button
+  if (!clicked) return;
+
+  //Remove active classes
+  tabs.forEach((l) => l.classList.remove("operations__tab--active"));
+  tabsContent.forEach((m) => m.classList.remove("operations__content--active"));
+
+  //Active tab
+  clicked.classList.add("operations__tab--active");
+
+  //Adding the content of the active tab
+  console.log(clicked.dataset.tab);
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
 });

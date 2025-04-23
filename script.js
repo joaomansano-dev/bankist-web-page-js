@@ -148,3 +148,91 @@ const handleHover = function (e) {
 nav.addEventListener("mouseover", handleHover.bind(0.5));
 
 nav.addEventListener("mouseout", handleHover.bind(1));
+
+//Implementing Sticky Navegation
+//Using scroll isn't the best option, so it's better to use the observerAPI
+// const initialCoordsS1 = section1.getBoundingClientRect();
+// console.log(initialCoordsS1);
+
+// window.addEventListener("scroll", function () {
+//   // console.log(this.window.scrollY);
+
+//   if (this.window.scrollY > initialCoordsS1.top) {
+//     nav.classList.add("sticky");
+//   } else {
+//     nav.classList.remove("sticky");
+//   }
+// });
+
+//Observer API
+//The idea is to use it when the header intersection is 0, meaning that we want the ".nav" to be sticky
+const navHeight = nav.getBoundingClientRect().height;
+console.log(navHeight);
+
+const stickyNavHeader = function (entries) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  if (!entry.isIntersecting) {
+    nav.classList.add("sticky");
+  } else {
+    nav.classList.remove("sticky");
+  }
+};
+
+const headerObserver = new IntersectionObserver(stickyNavHeader, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+});
+
+headerObserver.observe(header);
+
+//Revealing the sections
+
+const allSections = document.querySelectorAll(".section");
+
+//Callback function
+const revealSection = function (entries, observer) {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+
+    entry.target.classList.remove("section--hidden");
+
+    observer.unobserve(entry.target);
+  });
+};
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
+});
+
+//Lazy Loading Images
+
+const imgTargets = document.querySelectorAll("img[data-src]");
+
+const loadImage = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  //Replacing the source to the original image
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener("load", function () {});
+  entry.target.classList.remove("lazy-img");
+
+  observer.unobserve(entry.target);
+};
+
+const imgObserver = new IntersectionObserver(loadImage, {
+  root: null,
+  threshold: 0,
+  // rootMargin:'100px'
+});
+
+imgTargets.forEach((img) => imgObserver.observe(img));

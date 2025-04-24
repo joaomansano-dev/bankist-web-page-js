@@ -236,3 +236,90 @@ const imgObserver = new IntersectionObserver(loadImage, {
 });
 
 imgTargets.forEach((img) => imgObserver.observe(img));
+
+//Slider Components
+const slider = function () {
+  const slides = document.querySelectorAll(".slide");
+  const btnLeft = document.querySelector(".slider__btn--left");
+  const btnRight = document.querySelector(".slider__btn--right");
+  const dotContainer = document.querySelector(".dots");
+
+  let currentSlide = 0;
+  const maxSlide = slides.length;
+
+  //Functions
+
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        "beforeend",
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+
+  const activeDot = function (slide) {
+    document
+      .querySelectorAll(".dots__dot")
+      .forEach((dot) => dot.classList.remove("dots__dot--active"));
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`) //selecting the slide and activating the dot
+      .classList.add("dots__dot--active");
+  };
+
+  const goToSlide = function (slideIndex) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slideIndex)}%)`)
+    );
+  };
+
+  //Next Slide
+  const nextSlide = function () {
+    if (currentSlide === maxSlide - 1) {
+      currentSlide = 0;
+    } else {
+      currentSlide++;
+    }
+
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  };
+
+  const prevSlide = function () {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide - 1;
+    } else {
+      currentSlide--;
+    }
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  };
+
+  const init = function () {
+    goToSlide(0);
+    createDots();
+
+    activeDot(0);
+  };
+  init();
+
+  //Event Handlers
+  btnRight.addEventListener("click", nextSlide);
+  btnLeft.addEventListener("click", prevSlide);
+
+  //Adding key Events
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") prevSlide();
+    if (e.key === "ArrowRight") nextSlide();
+  });
+
+  dotContainer.addEventListener("click", function (e) {
+    if (e.target.classList.contains("dots__dot")) {
+      const slide = Number(e.target.dataset.slide); //Getting the index of the slide position
+      goToSlide(slide); //Going to the slide that is in the index of the dot
+      activeDot(slide);
+    }
+  });
+};
+slider();

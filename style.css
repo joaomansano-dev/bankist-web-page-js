@@ -458,7 +458,7 @@ h4 {
 
 .dots__dot--active {
   /* background-color: #fff; */
-  background-color: #888;
+  background-color: #000000;
   opacity: 1;
 }
 
@@ -515,7 +515,7 @@ h4 {
 }
 
 .testimonial__location {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .section__title--testimonials {

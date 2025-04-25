@@ -56,33 +56,33 @@ document
     message.remove();
   });
 
-const btnScrollTo = document.querySelector(".btn--scroll-to");
-const section1 = document.querySelector("#section--1");
+// const btnScrollTo = document.querySelector(".btn--scroll-to");
+// const section1 = document.querySelector("#section--1");
 
-btnScrollTo.addEventListener(".click", function (e) {
-  e.preventDefault();
+// btnScrollTo.addEventListener("click", function (e) {
+//   e.preventDefault();
 
-  const section1Coords = section1.getBoundingClientRect();
+//   const section1Coords = section1.getBoundingClientRect();
 
-  console.log(section1Coords);
+//   console.log(section1Coords);
 
-  //Scrolling
-  // window.scrollTo(
-  // section1Coords.left + window.pageXOffset,
-  // section1Coords.top + window.pageYOffset
-  // )
-  // });
+//   //Scrolling
+//   // window.scrollTo(
+//   // section1Coords.left + window.pageXOffset,
+//   // section1Coords.top + window.pageYOffset
+//   // )
+//   // });
 
-  //Scrolling an object (old way plus behavior)
-  // window.scrollTo({
-  //   left: section1Coords.left + window.pageXOffset,
-  //   top: section1Coords.top + window.pageYOffset,
-  //   behavior: "smooth",
-  // });
+//   //Scrolling an object (old way plus behavior)
+//   // window.scrollTo({
+//   //   left: section1Coords.left + window.pageXOffset,
+//   //   top: section1Coords.top + window.pageYOffset,
+//   //   behavior: "smooth",
+//   // });
 
-  //Modern way
-  section1Coords.scrollIntoView({ behavior: "smooth" });
-});
+//   //Modern way
+//   section1.scrollIntoView({ behavior: "smooth" });
+// });
 
 // One way of doing it (not efficient one)
 // document.querySelectorAll(".nav__link").forEach(function (el) {
@@ -96,7 +96,7 @@ btnScrollTo.addEventListener(".click", function (e) {
 //   });
 // });
 
-document.querySelector(".nav__links").addEventListener("s click", function (e) {
+document.querySelector(".nav__links").addEventListener("click", function (e) {
   e.preventDefault();
 
   //Just the clicks on the buttons will work
